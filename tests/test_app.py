@@ -71,7 +71,7 @@ def test_update_todo(client):
     # First, add a todo
     add_response = client.post('/todos', json={'title': 'Task to update'})
     todo_id = add_response.get_json()['id']
-    
+
     # Update it
     response = client.put(f'/todos/{todo_id}', json={
         'title': 'Updated task',
@@ -88,7 +88,7 @@ def test_delete_todo(client):
     # First, add a todo
     add_response = client.post('/todos', json={'title': 'Task to delete'})
     todo_id = add_response.get_json()['id']
-    
+
     # Delete it
     response = client.delete(f'/todos/{todo_id}')
     assert response.status_code == 200
