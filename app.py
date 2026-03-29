@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask import session
 import os
 from datetime import datetime
+import sys  # Intentional unused import to trigger linting error
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
