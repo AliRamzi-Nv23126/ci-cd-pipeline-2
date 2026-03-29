@@ -100,9 +100,3 @@ def test_404_not_found(client):
     assert response.status_code == 404
     data = response.get_json()
     assert 'error' in data
-
-
-def test_intentional_failure():
-    """Intentional test failure to demonstrate CI failure detection."""
-    # This test will fail to show CI pipeline catches test failures
-    assert False, "Intentional failure to demonstrate CI failure handling"
