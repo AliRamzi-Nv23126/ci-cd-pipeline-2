@@ -71,7 +71,7 @@ def test_update_todo(client):
     # First, add a todo
     add_response = client.post('/todos', json={'title': 'Task to update'})
     todo_id = add_response.get_json()['id']
-    
+
     # Update it
     response = client.put(f'/todos/{todo_id}', json={
         'title': 'Updated task',
@@ -88,7 +88,7 @@ def test_delete_todo(client):
     # First, add a todo
     add_response = client.post('/todos', json={'title': 'Task to delete'})
     todo_id = add_response.get_json()['id']
-    
+
     # Delete it
     response = client.delete(f'/todos/{todo_id}')
     assert response.status_code == 200
@@ -100,3 +100,9 @@ def test_404_not_found(client):
     assert response.status_code == 404
     data = response.get_json()
     assert 'error' in data
+
+
+def test_intentional_failure():
+    """Intentional test failure to demonstrate CI failure detection."""
+    # This test will fail to show CI pipeline catches test failures
+    assert False, "Intentional failure to demonstrate CI failure handling"

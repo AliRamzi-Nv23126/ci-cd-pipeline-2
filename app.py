@@ -1,9 +1,7 @@
 """Flask ToDo app with basic functionality."""
-from flask import Flask, render_template, request, redirect, url_for, jsonify
-from flask import session
+from flask import Flask, request, jsonify, session
 import os
 from datetime import datetime
-import sys  # Intentional unused import to trigger linting error
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
@@ -52,11 +50,11 @@ def add_todo():
     data = request.get_json()
     if not data or 'title' not in data:
         return jsonify({'error': 'Title is required'}), 400
-    
+
     user_id = session.get('user_id', 'user1')
     if user_id not in todos:
         todos[user_id] = []
-    
+
     new_todo = {
         'id': max([t['id'] for t in todos[user_id]], default=0) + 1,
         'title': data['title'],
@@ -71,7 +69,7 @@ def update_todo(todo_id):
     """Update a todo by ID."""
     user_id = session.get('user_id', 'user1')
     user_todos = todos.get(user_id, [])
-    
+
     for todo in user_todos:
         if todo['id'] == todo_id:
             data = request.get_json()
@@ -80,7 +78,7 @@ def update_todo(todo_id):
             if 'completed' in data:
                 todo['completed'] = data['completed']
             return jsonify(todo), 200
-    
+
     return jsonify({'error': 'Todo not found'}), 404
 
 
@@ -89,12 +87,12 @@ def delete_todo(todo_id):
     """Delete a todo by ID."""
     user_id = session.get('user_id', 'user1')
     user_todos = todos.get(user_id, [])
-    
+
     for i, todo in enumerate(user_todos):
         if todo['id'] == todo_id:
             user_todos.pop(i)
             return jsonify({'message': 'Todo deleted'}), 200
-    
+
     return jsonify({'error': 'Todo not found'}), 404
 
 
