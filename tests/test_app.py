@@ -25,13 +25,12 @@ def test_app_responds():
 
 
 def test_index_route(client):
-    """Test the index route returns todos."""
+    """Test the index route returns HTML dashboard."""
     response = client.get('/')
     assert response.status_code == 200
-    data = response.get_json()
-    assert 'todos' in data
-    assert 'message' in data
-    assert data['message'] == 'Flask ToDo App'
+    data = response.get_data(as_text=True)
+    assert 'Todo App' in data or 'todo' in data.lower()
+    assert response.content_type.startswith('text/html')
 
 
 def test_health_check(client):

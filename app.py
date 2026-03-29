@@ -1,5 +1,5 @@
 """Flask ToDo app with basic functionality."""
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify, session, render_template
 import os
 from datetime import datetime
 
@@ -20,11 +20,7 @@ def index():
     """Home page - list todos."""
     user_id = session.get('user_id', 'user1')
     user_todos = todos.get(user_id, [])
-    return jsonify({
-        'message': 'Flask ToDo App',
-        'todos': user_todos,
-        'status': 'running'
-    })
+    return render_template('dashboard.html', todos=user_todos)
 
 
 @app.route('/health')
